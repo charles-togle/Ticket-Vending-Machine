@@ -1,8 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import Home from "./TVM/pages/Homepage";
+import App from './TVM/pages/App'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Home />
+    <App />
   </StrictMode>,
 )
