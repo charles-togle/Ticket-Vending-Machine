@@ -1,8 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import Form from "./forms/Form";
+import Home from "./TVM/pages/Homepage";
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Form />
+    <Home />
   </StrictMode>,
 )
