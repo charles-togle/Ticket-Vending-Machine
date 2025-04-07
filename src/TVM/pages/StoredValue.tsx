@@ -1,34 +1,12 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 import Button from "../components/Button";
 import CardDetailsProvider from "../providers/CardDetailsProvider";
-interface CardDetails {
-  value: number;
-  cardID: string;
-  isGoodForEntry: boolean;
-  expiryDate: Date;
-}
+import { useCardDetails } from "../hooks/useCardDetails";
+
 
 export default function StoredValue(): ReactNode {
-  const [cardDetails, setCardDetails] = useState<CardDetails>();
 
-  //LEARN USE OF CONTEXTS!!!!!
-
-  // const addValue = (val: number) => {
-  //   setCardDetails((prev) => {
-  //     if (!prev)
-  //       return {
-  //         value: val,
-  //         cardID: "",
-  //         isGoodForEntry: false,
-  //         expiryDate: new Date(),
-  //       };
-  //     return {
-  //       ...prev,
-  //       value: prev.value + val,
-  //     };
-  //   });
-  // };
-
+  const {cardDetails, setCardDetails} = useCardDetails();
   useEffect(() => {
     setCardDetails({
       value: 20,
@@ -36,7 +14,8 @@ export default function StoredValue(): ReactNode {
       isGoodForEntry: 20 > 13,
       expiryDate: new Date("11 / 24 / 2028"),
     });
-  }, []);
+  }, [setCardDetails]);
+  
   return (
     <CardDetailsProvider>
       <section className="fixed inset-0 grid grid-cols-[40vw_60vw] grid-row-[40vh_60vh] gap-x-10 gap-y-4 p-6 bg-blue-100">
