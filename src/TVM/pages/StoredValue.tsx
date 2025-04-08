@@ -1,17 +1,17 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Button from "../components/Button";
 import CardDetailsProvider from "../providers/CardDetailsProvider";
 import { useCardDetails } from "../hooks/useCardDetails";
 import { useNavigate } from "react-router-dom";
 import getCardByID from "../utilities/getCardDetails";
-
+import Prompt from "../components/Prompt";
 
 function StoredValueComponent(): ReactNode {
   const { cardDetails, setCardDetails } = useCardDetails();
-  
-
+  const [addValue, setAddValue] = useState<string>("");
+  const [isAddingValue, setIsAddingValue] = useState<boolean>(false);
   useEffect(() => {
-    getCardByID("54321").then(card => {
+    getCardByID("54321").then((card) => {
       setCardDetails(card);
     });
   }, [setCardDetails]);
@@ -19,6 +19,29 @@ function StoredValueComponent(): ReactNode {
   const navigate = useNavigate();
   const returnToHome = () => {
     navigate("/");
+  };
+
+  const addValueClicked = () => {
+    setIsAddingValue(true);
+  };
+
+  const cancelPrompt = () => {
+    setIsAddingValue(false);
+  };
+  const confirmPrompt = () => {
+    const numericValue = Number(addValue);
+    if (isNaN(numericValue) || numericValue <= 0) {
+      alert("input a number");
+      setAddValue("");
+      return;
+    }
+    if(numericValue <= 13){
+      alert("insufficient add balance (must be more than 13)");
+      setAddValue("");
+      return;
+    }
+    console.log("Numeric Value to Add:", numericValue); 
+    setIsAddingValue(false);
   };
 
   return (
@@ -34,6 +57,7 @@ function StoredValueComponent(): ReactNode {
         <Button
           className="w-fit self-end mr-20 mt-10 "
           text="Add Value"
+          action={addValueClicked}
         ></Button>
         <Button
           className="absolute bottom-15 right-15"
@@ -71,6 +95,16 @@ function StoredValueComponent(): ReactNode {
           </p>
         )}
       </div>
+      {isAddingValue && (
+        <Prompt
+          promptText="Input Value to Add"
+          inputType="number"
+          inputValue={addValue}
+          setInputValue={setAddValue}
+          cancelAction={cancelPrompt}
+          confirmAction={confirmPrompt}
+        ></Prompt>
+      )}
     </section>
   );
 }
