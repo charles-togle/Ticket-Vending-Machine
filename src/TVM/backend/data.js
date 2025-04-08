@@ -1,6 +1,7 @@
 import express from "express";
 import { readFileSync, writeFileSync } from "fs";
 import cors from "cors";
+import { json } from "stream/consumers";
 const app = express();
 app.use(
   cors({
@@ -17,19 +18,29 @@ app.get("/data", (req, res) => {
   res.json(data);
 });
 
-app.post("/data", (req, res) => {
-  const newData = req.body;
-  writeFileSync(filepath, JSON.stringify(newData, null, 2), "utf-8");
-  res.json({ message: "JSON updated successfully" });
-});
-
 app.get("/:cardID", (req, res) => {
   const { cardID } = req.params;
   const data = JSON.parse(readFileSync(filepath), "utf-8");
-  const obj = Object.values(data).find((card) => card.cardID === cardID);
+  const card = Object.values(data).find((card) => card.cardID === cardID);
 
-  if (obj) {
-    res.json(obj);
+  if (card) {
+    res.json(card);
+  } else {
+    res.status(404).json({ message: `Card with id ${cardID} not found` });
+  }
+});
+
+app.post("/:cardID", (req, res) => {
+  const {cardID} = req.params;
+  const updatedData = req.body;
+
+  let data = JSON.parse(readFileSync(filepath), "utf-8");
+  const card = Object.values(data).find((card) => card.cardID === cardID);
+  console.log(updatedData);
+  if (card) {
+    Object.assign(card, updatedData);
+    writeFileSync(filepath, JSON.stringify(data, null, 2), "utf-8");
+    res.json({ message: "Card updated successfully", updatedCard: card });
   } else {
     res.status(404).json({ message: `Card with id ${cardID} not found` });
   }
