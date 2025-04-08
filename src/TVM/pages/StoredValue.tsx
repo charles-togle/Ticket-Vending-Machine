@@ -1,12 +1,10 @@
 import { ReactNode, useEffect, useState } from "react";
 import Button from "../components/Button";
-import CardDetailsProvider from "../providers/CardDetailsProvider";
 import { useCardDetails } from "../hooks/useCardDetails";
 import { useNavigate } from "react-router-dom";
 import getCardByID from "../utilities/getCardDetails";
 import Prompt from "../components/Prompt";
 import { useCallback } from "react";
-import Loadscreen from "../components/Loadscreen";
 
 const CardValueDisplay = ({ cardValue }: { cardValue?: number }) => {
   return (
@@ -22,18 +20,23 @@ function StoredValueComponent(): ReactNode {
   const [addValue, setAddValue] = useState<string>("");
   const [isAddingValue, setIsAddingValue] = useState<boolean>(false);
   const [cardValue, setCardValue] = useState<number>();
-  const cardID = cardDetails.cardID;
-  console.log("rendering stored value component");
 
   useEffect(() => {
+    let cancelled = false;
+
     getCardByID("54321").then((card) => {
-      setCardDetails(card);
+      if (!cancelled) {
+        setCardDetails(card);
+        setCardValue(card.value);
+        console.log("setting card details");
+        console.log("setting card value");
+      }
     });
-  }, [setCardDetails, cardID]);
 
-  useEffect(() => {
-    setCardValue(cardDetails.value);
-  }, [setCardValue, cardDetails.value]);
+    return () => {
+      cancelled = true;
+    };
+  }, [setCardDetails]);
 
   const navigate = useNavigate();
   const returnToHome = () => {
@@ -62,29 +65,18 @@ function StoredValueComponent(): ReactNode {
     }
 
     const addedValue = cardDetails.value + numericValue;
-    const updatedCardData = {
-      value: addedValue,
-      cardID: cardID,
-    };
 
-    try {
-      const response = await fetch(`http://localhost:3001/${cardID}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedCardData),
-      });
-      if (response.ok) {
-        return(<Loadscreen title="Loading " subtitle=""></Loadscreen>)
-      }
-    } catch (error) {
-      console.error("Error updating the card:", error);
-      alert("There was an error updating the card");
-    }
+    setCardValue(addedValue);
+    setCardDetails((prev) => ({
+      ...prev,
+      value: addedValue,
+      prevValue: cardDetails.value,
+    }));
+
+    navigate("success");
 
     setIsAddingValue(false);
-  }, [addValue, cardDetails.value, cardID]);
+  }, [addValue, cardDetails.value, setCardDetails, navigate]);
 
   return (
     <section className="fixed inset-0 grid grid-cols-[40vw_60vw] grid-row-[40vh_60vh] gap-x-10 gap-y-4 p-6 bg-blue-100">
@@ -149,9 +141,5 @@ function StoredValueComponent(): ReactNode {
 }
 
 export default function StoredValue(): ReactNode {
-  return (
-    <CardDetailsProvider>
-      <StoredValueComponent></StoredValueComponent>
-    </CardDetailsProvider>
-  );
+  return <StoredValueComponent></StoredValueComponent>;
 }

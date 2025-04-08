@@ -1,7 +1,8 @@
 import express from "express";
 import { readFileSync, writeFileSync } from "fs";
 import cors from "cors";
-import { json } from "stream/consumers";
+import { promises as fsPromises } from "fs";
+
 const app = express();
 app.use(
   cors({
@@ -30,19 +31,31 @@ app.get("/:cardID", (req, res) => {
   }
 });
 
-app.post("/:cardID", (req, res) => {
-  const {cardID} = req.params;
+app.post("/:cardID", async (req, res) => {
+  const { cardID } = req.params;
   const updatedData = req.body;
 
-  let data = JSON.parse(readFileSync(filepath), "utf-8");
-  const card = Object.values(data).find((card) => card.cardID === cardID);
-  console.log(updatedData);
-  if (card) {
-    Object.assign(card, updatedData);
-    writeFileSync(filepath, JSON.stringify(data, null, 2), "utf-8");
-    res.json({ message: "Card updated successfully", updatedCard: card });
-  } else {
-    res.status(404).json({ message: `Card with id ${cardID} not found` });
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Content-Type", "application/json");
+
+  try {
+    const data = JSON.parse(await fsPromises.readFile(filepath, "utf-8"));
+    const card = Object.values(data).find((card) => card.cardID === cardID);
+
+    if (card) {
+      Object.assign(card, updatedData);
+      await fsPromises.writeFile(
+        filepath,
+        JSON.stringify(data, null, 2),
+        "utf-8"
+      );
+      res.json({ message: "Card updated successfully", updatedCard: card });
+    } else {
+      res.status(404).json({ message: `Card with id ${cardID} not found` });
+    }
+  } catch (error) {
+    console.error("Error reading or writing file:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

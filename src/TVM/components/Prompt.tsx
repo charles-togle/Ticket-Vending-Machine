@@ -32,12 +32,14 @@ export default function Prompt({
           <button
             className="border-3 border-blue-800 py-2.5 px-5 hover:bg-blue-800"
             onClick={confirmAction}
+            type="button"
           >
             Confirm
           </button>
           <button
             className="border-3 border-red-500 py-2.5 px-5 hover:bg-red-500"
             onClick={cancelAction}
+            type="button"
           >
             Cancel
           </button>
