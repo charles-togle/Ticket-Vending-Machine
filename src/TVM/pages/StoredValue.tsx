@@ -3,15 +3,16 @@ import Button from "../components/Button";
 import CardDetailsProvider from "../providers/CardDetailsProvider";
 import { useCardDetails } from "../hooks/useCardDetails";
 import { useNavigate } from "react-router-dom";
+import getCardByID from "../utilities/getCardDetails";
+
 
 function StoredValueComponent(): ReactNode {
   const { cardDetails, setCardDetails } = useCardDetails();
+  
+
   useEffect(() => {
-    setCardDetails({
-      value: 20,
-      cardID: "123456789098765",
-      isGoodForEntry: 20 > 13,
-      expiryDate: new Date("11 / 24 / 2028"),
+    getCardByID("54321").then(card => {
+      setCardDetails(card);
     });
   }, [setCardDetails]);
 
@@ -62,7 +63,7 @@ function StoredValueComponent(): ReactNode {
           <p>
             <strong>Expiry Date: </strong>
             <br />
-            {cardDetails?.expiryDate.toLocaleString("en-us", {
+            {new Date(cardDetails.expiryDate).toLocaleString("en-us", {
               year: "numeric",
               month: "long",
               day: "numeric",

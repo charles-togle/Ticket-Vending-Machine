@@ -1,0 +1,26 @@
+{
+    "card1": {
+        "value": 20,
+        "cardID": "12345",
+        "isGoodForEntry": true,
+        "expiryDate": "11/24/28"
+    },
+    "card2": {
+        "value": 12,
+        "cardID": "678910",
+        "isGoodForEntry": false,
+        "expiryDate": "11/24/28"
+    },
+    "card3": {
+        "value": 73,
+        "cardID": "54321",
+        "isGoodForEntry": true,
+        "expiryDate": "11/24/28"
+    },
+    "card4": {
+        "value": 1,
+        "cardID": "1098765",
+        "isGoodForEntry": false,
+        "expiryDate": "11/24/28"
+    }
+}

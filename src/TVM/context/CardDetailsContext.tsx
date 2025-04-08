@@ -4,7 +4,7 @@ export interface CardDetailType {
   value: number;
   cardID: string;
   isGoodForEntry: boolean;
-  expiryDate: Date;
+  expiryDate: string;
 }
 
 export interface CardContextDataType {
