@@ -14,8 +14,8 @@
     "expiryDate": "11/24/28"
   },
   "card3": {
-    "value": 4412,
-    "prevValue": 4312,
+    "value": 4612,
+    "prevValue": 4512,
     "cardID": "54321",
     "isGoodForEntry": true,
     "expiryDate": "11/24/28"
