@@ -35,9 +35,6 @@ app.post("/:cardID", async (req, res) => {
   const { cardID } = req.params;
   const updatedData = req.body;
 
-  res.setHeader("Cache-Control", "no-store");
-  res.setHeader("Content-Type", "application/json");
-
   try {
     const data = JSON.parse(await fsPromises.readFile(filepath, "utf-8"));
     const card = Object.values(data).find((card) => card.cardID === cardID);
