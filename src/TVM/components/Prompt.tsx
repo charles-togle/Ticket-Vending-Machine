@@ -20,15 +20,15 @@ export default function Prompt({
   return (
     <div className="w-screen h-screen flex justify-center items-center absolute">
       <div className="w-full h-full absolute top-0 bg-black opacity-60 z-2 "></div>
-      <div className="aspect-[16/9] w-1/3 relative bg-gray-900 text-white flex flex-col justify-center items-center rounded-xl z-3">
+      <div className="aspect-[16/9] w-1/3 relative bg-gray-900 text-white flex flex-col justify-evenly items-center rounded-xl z-3">
         <p className="absolute top-10 font-bold text-3xl">{promptText}</p>
         <input
           type={inputType || "text"}
-          className="bg-white h-10 pl-3 text-xl text-black"
+          className="bg-white h-10 pl-3 text-xl text-black mt-20"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <div className="flex absolute bottom-10 right-10 space-x-5 font-semibold">
+        <div className="flex space-x-5 font-semibold">
           <button
             className="border-3 border-red-500 py-2.5 px-5 hover:bg-red-500"
             onClick={cancelAction}
