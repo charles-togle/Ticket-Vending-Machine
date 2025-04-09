@@ -6,7 +6,7 @@ interface PromptProps {
   inputValue?: string;
   cancelAction?: React.MouseEventHandler<HTMLButtonElement>;
   confirmAction?: React.MouseEventHandler<HTMLButtonElement>;
-  inputType? :string
+  inputType?: string;
 }
 
 export default function Prompt({
@@ -15,7 +15,7 @@ export default function Prompt({
   inputValue,
   cancelAction,
   confirmAction,
-  inputType
+  inputType,
 }: PromptProps): ReactNode {
   return (
     <div className="w-screen h-screen flex justify-center items-center absolute">
@@ -30,18 +30,18 @@ export default function Prompt({
         />
         <div className="flex absolute bottom-10 right-10 space-x-5 font-semibold">
           <button
-            className="border-3 border-blue-800 py-2.5 px-5 hover:bg-blue-800"
-            onClick={confirmAction}
-            type="button"
-          >
-            Confirm
-          </button>
-          <button
             className="border-3 border-red-500 py-2.5 px-5 hover:bg-red-500"
             onClick={cancelAction}
             type="button"
           >
             Cancel
+          </button>
+          <button
+            className="border-3 border-blue-800 py-2.5 px-5 hover:bg-blue-800"
+            onClick={confirmAction}
+            type="button"
+          >
+            Confirm
           </button>
         </div>
       </div>
