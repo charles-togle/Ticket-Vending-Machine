@@ -24,7 +24,7 @@ function StoredValueComponent(): ReactNode {
   useEffect(() => {
     let cancelled = false;
 
-    getCardByID("54321").then((card) => {
+    getCardByID(cardDetails.cardID).then((card) => {
       if (!cancelled) {
         setCardDetails(card);
         setCardValue(card.value);
@@ -36,7 +36,7 @@ function StoredValueComponent(): ReactNode {
     return () => {
       cancelled = true;
     };
-  }, [setCardDetails]);
+  }, [setCardDetails, cardDetails.cardID]);
 
   const navigate = useNavigate();
   const returnToHome = () => {
@@ -98,16 +98,16 @@ function StoredValueComponent(): ReactNode {
       </div>
       <div className="p-4 bg-white flex flex-col space-y-4 [&>p]:text-l">
         <p className="text-xl font-bold">Card Details:</p>
-        {cardDetails?.isGoodForEntry && (
+        {cardDetails?.isGoodForEntry !== undefined && (
           <p>
             <strong>Status: </strong>
             <br />
             {cardDetails?.isGoodForEntry
               ? "Good for Entry"
-              : "Insufficient Balance"}
+              : "Insufficient Balance (minimum P13.00)"}
           </p>
         )}
-        {cardDetails?.isGoodForEntry && (
+        {cardDetails?.isGoodForEntry !== undefined && (
           <p>
             <strong>Card ID: </strong>
             <br />
