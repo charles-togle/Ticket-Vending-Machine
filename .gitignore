@@ -23,4 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 src/TVM/fakedata.json
-src/TVM/fakedata.json
