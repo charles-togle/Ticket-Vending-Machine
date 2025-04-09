@@ -3,6 +3,7 @@ import { CardDetailType } from "../context/CardDetailsContext";
 export default async function getCardByID(cardID: string): Promise<CardDetailType> {
   const defaultObject: CardDetailType = {
     value: 0,
+    prevValue: 0,
     isGoodForEntry: false,
     cardID: "00000",
     expiryDate: "1/1/1970",
