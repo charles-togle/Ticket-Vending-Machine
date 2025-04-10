@@ -7,9 +7,10 @@ const CardDetailsProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [cardDetail, setCardDetails] = useState<CardDetailType>({
     value: 0,
+    prevValue: 0,
     cardID: "",
     isGoodForEntry: false,
-    expiryDate: new Date(),
+    expiryDate: new Date().toString(),
   });
 
   return (
@@ -18,3 +19,4 @@ const CardDetailsProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 export default CardDetailsProvider;
+
