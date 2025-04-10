@@ -1,11 +1,14 @@
 import { ReactNode, useEffect, useState } from "react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
+import { useSingleJourneyTicket } from "../hooks/useSingleJourney";
+
 export default function SingleJourney(): ReactNode {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [selectedStation, setSelectedStation] = useState<number>(-1);
   const [currentStation, setCurrentStation] = useState<number>(-1);
   const [ticketFair, setTicketFair] = useState<number>(-1);
+  const { setSingleJourneyTicket } = useSingleJourneyTicket();
   const stationList: string[] = [
     "Recto",
     "Legarda",
@@ -36,20 +39,24 @@ export default function SingleJourney(): ReactNode {
 
   const handleChangeStation = (index: number): void => {
     setSelectedStation(index);
-    setTicketFair(calculatePrice(index-1));
+    setTicketFair(calculatePrice(index - 1));
   };
 
   useEffect(() => {
-    setCurrentStation(7)
-  },[]);
+    setCurrentStation(7);
+  }, []);
 
   const handleCancel = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   const handleConfirm = () => {
-    console.log("confirm")
-  }
+    setSingleJourneyTicket({
+      price: ticketFair,
+      stationName: stationList[selectedStation],
+    });
+    navigate("/single-journey/payment");
+  };
 
   return (
     <div id="single-journey-container" className="flex flex-row">
@@ -129,3 +136,4 @@ export default function SingleJourney(): ReactNode {
     </div>
   );
 }
+
