@@ -1,0 +1,15 @@
+export const stationList: string[] = [
+    "Recto",
+    "Legarda",
+    "Pureza",
+    "V. Mapa",
+    "J. Ruiz",
+    "Gilmore",
+    "Betty Go",
+    "Cubao",
+    "Anonas",
+    "Katipunan",
+    "Santolan",
+    "Marikina",
+    "Antipolo",
+  ];
