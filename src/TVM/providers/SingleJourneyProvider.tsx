@@ -7,7 +7,9 @@ const SingleJourneyProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [singleJourneyTicket, setSingleJourneyTicket] = useState<SingleJourneyType>({
     stationName: "",
-    price: 0
+    price: 0,
+    quantity: 1,
+    change: 0,
   });
 
   return (
