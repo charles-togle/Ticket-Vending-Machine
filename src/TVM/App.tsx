@@ -6,21 +6,16 @@ import SingleJourneyProvider from "./providers/SingleJourneyProvider";
 import StoredValue from "./pages/StoredValue";
 import Home from "./pages/Homepage";
 import CardDetailsProvider from "./providers/CardDetailsProvider";
-import Payment from "./pages/Payment";
+import Payment from "./pages/SingleJourneyPayment";
+import SingleJourneySuccess from "./pages/SingleJourneySuccess";
 
-function CardDetailsLayout() {
+function SharedProvidersLayout() {
   return (
     <CardDetailsProvider>
-      <Outlet />
+      <SingleJourneyProvider>
+        <Outlet />
+      </SingleJourneyProvider>
     </CardDetailsProvider>
-  );
-}
-
-function SingleJourneyLayout() {
-  return (
-    <SingleJourneyProvider>
-      <Outlet />
-    </SingleJourneyProvider>
   );
 }
 
@@ -28,14 +23,16 @@ export default function App(): React.ReactNode {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<CardDetailsLayout />}>
+        <Route element={<SharedProvidersLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/stored-value" element={<StoredValue />} />
           <Route path="/stored-value/success" element={<StoredSucess />} />
-        </Route>
-        <Route element={<SingleJourneyLayout />}>
           <Route path="/single-journey" element={<SingleJourney />} />
           <Route path="/single-journey/payment" element={<Payment />} />
+          <Route
+            path="/single-journey/payment/success"
+            element={<SingleJourneySuccess />}
+          ></Route>
         </Route>
       </Routes>
     </BrowserRouter>
