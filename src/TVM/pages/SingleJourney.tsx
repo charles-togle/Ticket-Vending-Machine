@@ -2,28 +2,14 @@ import { ReactNode, useEffect, useState } from "react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { useSingleJourneyTicket } from "../hooks/useSingleJourney";
+import { stationList } from "../utilities/stationList";
 
 export default function SingleJourney(): ReactNode {
   const navigate = useNavigate();
   const [selectedStation, setSelectedStation] = useState<number>(-1);
   const [currentStation, setCurrentStation] = useState<number>(-1);
   const [ticketFair, setTicketFair] = useState<number>(-1);
-  const { setSingleJourneyTicket } = useSingleJourneyTicket();
-  const stationList: string[] = [
-    "Recto",
-    "Legarda",
-    "Pureza",
-    "V. Mapa",
-    "J. Ruiz",
-    "Gilmore",
-    "Betty Go",
-    "Cubao",
-    "Anonas",
-    "Katipunan",
-    "Santolan",
-    "Marikina",
-    "Antipolo",
-  ];
+  const { singleJourneyTicket, setSingleJourneyTicket } = useSingleJourneyTicket();
 
   const Prices: number[] = [15, 20, 20, 20, 25, 25, 25, 25, 30, 30, 35, 35];
   const stationIndicators = [
@@ -43,8 +29,8 @@ export default function SingleJourney(): ReactNode {
   };
 
   useEffect(() => {
-    setCurrentStation(7);
-  }, []);
+    setCurrentStation(stationList.indexOf(singleJourneyTicket.stationName));
+  }, [singleJourneyTicket.stationName]);
 
   const handleCancel = () => {
     navigate("/");
@@ -54,6 +40,8 @@ export default function SingleJourney(): ReactNode {
     setSingleJourneyTicket({
       price: ticketFair,
       stationName: stationList[selectedStation],
+      quantity: 1,
+      change: 0,
     });
     navigate("/single-journey/payment");
   };
@@ -136,4 +124,3 @@ export default function SingleJourney(): ReactNode {
     </div>
   );
 }
-

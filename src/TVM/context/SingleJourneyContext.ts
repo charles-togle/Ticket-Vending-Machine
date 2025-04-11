@@ -3,6 +3,8 @@ import { createContext } from "react";
 export interface SingleJourneyType {
   stationName: string;
   price: number;
+  change: number;
+  quantity: number;
 }
 
 export interface SingleJourneyContextDataType {
