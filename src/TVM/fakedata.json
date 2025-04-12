@@ -1,7 +1,7 @@
 {
   "card1": {
-    "value": 120,
-    "prevValue": 20,
+    "value": 620,
+    "prevValue": 120,
     "cardID": "12345",
     "isGoodForEntry": true,
     "expiryDate": "11/24/28"
@@ -14,8 +14,8 @@
     "expiryDate": "11/24/28"
   },
   "card3": {
-    "value": 4612,
-    "prevValue": 4512,
+    "value": 4712,
+    "prevValue": 4612,
     "cardID": "54321",
     "isGoodForEntry": true,
     "expiryDate": "11/24/28"

@@ -9,7 +9,6 @@ export default function Payment(): ReactNode {
   const [price, setPrice] = useState<number>(0);
   const [isPaying, setIsPaying] = useState<boolean>(false);
   const [amountPaid, setAmountPaid] = useState<string>("");
-
   const { singleJourneyTicket, setSingleJourneyTicket } =
     useSingleJourneyTicket();
   const navigate = useNavigate();
