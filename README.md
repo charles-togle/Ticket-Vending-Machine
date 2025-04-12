@@ -21,7 +21,7 @@
 ![Home Page](readme-images/Homepage.png)
 
 **Input Card Number for Single Value Card**  
-![Input Card Number for Single Value Card](readme-images/TVM-Card.png)
+![Input Card Number for Single Value Card](readme-images/SVC-Card.png)
 
 **Single Value Card Page**  
 ![Single Value Card Page](readme-images/SVC-Actions.png)
